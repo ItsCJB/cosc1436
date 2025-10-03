@@ -188,8 +188,8 @@ int main()
 
     //Genres, up to 5 
     done = false;
-    int count = 0; 
- while (!done && count < 5)
+    int count = 0;
+    for (count = 0; count < 5; ++count)
     {
         std::string genre;
 
@@ -200,8 +200,12 @@ int main()
         else
             genres = genres + ", " + genre;
 
-        ++count; // or ,count++
+        //++count;  // or, count++
     }
+
+      
+  
+
     std::cout << "Is this a classic (Y/N)? ";
     std::string input;
     std::cin >> input;
