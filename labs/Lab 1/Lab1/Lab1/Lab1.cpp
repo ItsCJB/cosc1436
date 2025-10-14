@@ -1,3 +1,4 @@
+
 /*
 * Christopher Brink
 * Lab 1
@@ -21,7 +22,7 @@ int main()
     std::string StudentName;
 
     // ask the user/student for their name 
-    std::cout << "please enter name";
+    std::cout << "Please enter name";
     std::getline(std::cin, StudentName);
 
     //Use Variables for the lab grades when complete
