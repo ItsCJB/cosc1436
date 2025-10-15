@@ -60,6 +60,7 @@ void AddMovie()
     //Title is required
     while (movie.title == "")
     {
+        DisplayError("Title is required");
         std::cout << "Title is required" << std::endl;
         std::getline(std::cin, movie.title);
     }
