@@ -18,6 +18,11 @@ struct Movie
     std::string genres;         //Optional (comma separated list of genres)
 };
 
+void DisplayError( std::string message)
+{
+    std::cout << "ERROR: " << message << std::endl;
+}
+
 /// <summary>View details of a movie.</summary>
 /// <remarks>
 /// More details including paragraphs of data if you want.
