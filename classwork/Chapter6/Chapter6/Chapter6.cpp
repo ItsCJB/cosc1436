@@ -1,11 +1,8 @@
-
-/*
- * Chapter 6
- * COSC 1436
- */
+/
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include "Program.h"
 
 //Movie details
 struct Movie
@@ -18,6 +15,10 @@ struct Movie
     std::string genres;         //Optional (comma separated list of genres)
 };
 
+/// <summary>View details of a movie.</summary>
+/// <remarks>
+/// More details including paragraphs of data if you want.
+/// </remarks>
 void ViewMovie()
 {
     Movie movie;
@@ -38,49 +39,9 @@ void ViewMovie()
     std::cout << std::endl;
 }
 
-int main()
+/// <summary>Prompt user and add movie details.</summary>
+void AddMovie()
 {
-    //Display main menu
-    bool done = false;
-    do
-    {
-        std::cout << "Movie Library" << std::endl;
-        std::cout << "--------------" << std::endl;
-        std::cout << "A)dd Movie" << std::endl;
-        std::cout << "V)iew Movies" << std::endl;
-        std::cout << "E)dit Movie" << std::endl;
-        std::cout << "D)elete Movie" << std::endl;
-        std::cout << "Q)uit" << std::endl;
-
-        char choice;
-        std::cin >> choice;
-
-        switch (choice)
-        {
-            case 'A':
-            case 'a': std::cout << "Add not implemented" << std::endl; done = true; break;
-
-            case 'V':
-            case 'v':
-            {
-                std::cout << "View not implemented" << std::endl;
-                done = true;
-                break;
-            }
-
-            case 'D':
-            case 'd': std::cout << "Delete not implemented" << std::endl; done = true; break;
-
-            case 'E':
-            case 'e': std::cout << "Edit not implemented" << std::endl; done = true; break;
-
-            case 'Q':
-            case 'q': return 0;
-
-            default: std::cout << "Invalid choice" << std::endl; break;
-        };
-    } while (!done);
-
     Movie movie;// = {0};
 
     //Get movie details
@@ -156,9 +117,47 @@ int main()
             std::cin >> input;
         }
     }
+}
+
+int main()
+{
+    //Display main menu
+    bool done = false;
+    do
+    {
+        std::cout << "Movie Library" << std::endl;
+        std::cout << "--------------" << std::endl;
+        std::cout << "A)dd Movie" << std::endl;
+        std::cout << "V)iew Movies" << std::endl;
+        std::cout << "E)dit Movie" << std::endl;
+        std::cout << "D)elete Movie" << std::endl;
+        std::cout << "Q)uit" << std::endl;
+
+        char choice;
+        std::cin >> choice;
+
+        switch (choice)
+        {
+            case 'A':
+            case 'a': AddMovie(); break;
+
+            case 'V':
+            case 'v': ViewMovie(); break;
+
+            case 'D':
+            case 'd': std::cout << "Delete not implemented" << std::endl; break;
+
+            case 'E':
+            case 'e': std::cout << "Edit not implemented" << std::endl; break;
+
+            case 'Q':
+            case 'q': done = true;
+
+            default: std::cout << "Invalid choice" << std::endl; break;
+        };
+    } while (!done);
 
     //std::cin.ignore();
-
     // Function call ::= func () 
-    ViewMovie();
+    //ViewMovie();
 }
