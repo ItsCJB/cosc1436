@@ -61,7 +61,7 @@ void AddMovie()
     while (movie.title == "")
     {
         DisplayError("Title is required");
-        std::cout << "Title is required" << std::endl;
+  
         std::getline(std::cin, movie.title);
     }
 
@@ -72,10 +72,8 @@ void AddMovie()
 
         //Error
         if (movie.runLength < 0)
-        {
             std::string message = "Run length must be at least 0";
-            std::cout << "ERROR: " << message << std::endl;
-        }
+      
     } while (movie.runLength < 0);
 
     std::cout << "Enter the release year (1900-2100): ";
@@ -121,7 +119,7 @@ void AddMovie()
             movie.isClassic = false;
             break;
         } else {
-            std::cout << "You must enter either Y or N";
+            DisplayError("You must enter either Y or N");
 
             std::cin >> input;
         }
@@ -162,7 +160,7 @@ int main()
             case 'Q':
             case 'q': done = true;
 
-            default: std::cout << "Invalid choice" << std::endl; break;
+            default: DisplayError("Invalid choice");  break;
         };
     } while (!done);
 
