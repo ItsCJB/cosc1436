@@ -20,16 +20,19 @@ struct Movie
 
 void DisplayError( std::string message)
 {
-    std::cout << "ERROR: " << message << std::endl;
+    std::cout << "/033[91m"
+        << "ERROR: " << message
+        << ""\033[0m"
+        << std::endl;
 }
 
 /// <summary>View details of a movie.</summary>
 /// <remarks>
 /// More details including paragraphs of data if you want.
 /// </remarks>
-void ViewMovie()
+void ViewMovie(Movie movie)
 {
-    Movie movie;
+    
 
     // View movie
     //    Title (Year)
@@ -149,13 +152,13 @@ int main()
             case 'a': AddMovie(); break;
 
             case 'V':
-            case 'v': ViewMovie(); break;
+            case 'v': ViewMovie(movie); break;
 
             case 'D':
-            case 'd': std::cout << "Delete not implemented" << std::endl; break;
+            case 'd': DisplayWarning("Delete not implemented") << std::endl; break;
 
             case 'E':
-            case 'e': std::cout << "Edit not implemented" << std::endl; break;
+            case 'e': DisplayWarning("Edit not implemented") << std::endl; break;
 
             case 'Q':
             case 'q': done = true;
