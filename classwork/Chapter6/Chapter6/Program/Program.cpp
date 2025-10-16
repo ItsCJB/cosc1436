@@ -18,12 +18,46 @@ struct Movie
     std::string genres;         //Optional (comma separated list of genres)
 };
 
-void DisplayError( std::string message)
+/// <summary>Defines possible foreground colors.</summary>
+enum class ForegroundColor {
+    Black = 30,
+    Red = 31,
+    Green = 32,
+    Yellow = 33,
+    Cyan = 36,
+    BrightRed = 91,
+    BrightGreen = 92,
+    BrightYellow = 93,
+    BrightCyan = 96
+};
+
+void ResetTextColor()
 {
-    std::cout << "/033[91m"
-        << "ERROR: " << message
-        << ""\033[0m"
-        << std::endl;
+    std::cout << "\033[0m";
+}
+
+void SetTextColor(ForegroundColor color)
+{
+    std::cout << "\033[" << (int)color << "m";
+}
+
+/// <summary>Displays an error message.</summary>
+/// <param name="message">Message to display.</param>
+void DisplayError(std::string message)
+{
+    //std::cout << "\033[91m" 
+    SetTextColor(ForegroundColor::BrightRed);
+    std::cout << "ERROR: " << message << std::endl;
+    ResetTextColor();
+}
+
+/// <summary>Displays a warning message.</summary>
+/// <param name="message">Message to display.</param>
+void DisplayWarning(std::string message)
+{
+    SetTextColor(ForegroundColor::BrightYellow);
+    std::cout << message << std::endl;
+    ResetTextColor();
 }
 
 /// <summary>View details of a movie.</summary>
@@ -32,8 +66,6 @@ void DisplayError( std::string message)
 /// </remarks>
 void ViewMovie(Movie movie)
 {
-    
-
     // View movie
     //    Title (Year)
     //    Run Length # min
@@ -64,7 +96,6 @@ void AddMovie()
     while (movie.title == "")
     {
         DisplayError("Title is required");
-  
         std::getline(std::cin, movie.title);
     }
 
@@ -75,15 +106,15 @@ void AddMovie()
 
         //Error
         if (movie.runLength < 0)
-            std::string message = "Run length must be at least 0";
-      
+            DisplayError("Run length must be at least 0");
+
     } while (movie.runLength < 0);
 
     std::cout << "Enter the release year (1900-2100): ";
     std::cin >> movie.releaseYear;
     while (movie.releaseYear < 1900 || movie.releaseYear > 2100)
     {
-        std::cout << "Release year must be between 1900 and 2100" << std::endl;
+        DisplayError("Release year must be between 1900 and 2100");
 
         std::cin >> movie.releaseYear;
     }
@@ -146,6 +177,8 @@ int main()
         char choice;
         std::cin >> choice;
 
+        Movie movie;
+
         switch (choice)
         {
             case 'A':
@@ -155,15 +188,15 @@ int main()
             case 'v': ViewMovie(movie); break;
 
             case 'D':
-            case 'd': DisplayWarning("Delete not implemented") << std::endl; break;
+            case 'd': DisplayWarning("Delete not implemented"); break;
 
             case 'E':
-            case 'e': DisplayWarning("Edit not implemented") << std::endl; break;
+            case 'e': DisplayWarning("Edit not implemented"); break;
 
             case 'Q':
             case 'q': done = true;
 
-            default: DisplayError("Invalid choice");  break;
+            default: DisplayError("Invalid choice"); break;
         };
     } while (!done);
 
