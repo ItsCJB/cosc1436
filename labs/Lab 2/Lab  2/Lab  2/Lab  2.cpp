@@ -7,37 +7,37 @@ int main()
     double InterestRate = 0;
     double MonthlyPayment = 0;
 
-    std::cout << "Enter loan amount ($1-$1000): ";
+    std::cout << "enter loan amount ($1-$1000): ";
     std::cin >> LoanAmount;
 
     while (LoanAmount < 1 || LoanAmount > 1000)
     {
-        std::cout << "Error must be 1-1000" << std::endl;
-        std::cout << "Enter Again: ";
+        std::cout << "error must be 1-1000" << std::endl;
+        std::cout << "enter Again: ";
         std::cin >> LoanAmount;
     }
 
-    std::cout << "Enter interest rate (1-100%): ";
+    std::cout << "enter interest rate (1-100%): ";
     std::cin >> InterestRate;
     while (InterestRate < 1.0 || InterestRate > 100.0)
     {
-        std::cout << "Invalid rate, try again: ";
+        std::cout << "invalid rate, try again: ";
         std::cin >> InterestRate;
     }
 
     InterestRate = InterestRate / 100;
 
-    std::cout << "Monthly payment? ";
+    std::cout << "monthly payment? ";
     std::cin >> MonthlyPayment;
 
     while (MonthlyPayment < 0 || MonthlyPayment > LoanAmount)
     {
-        std::cout << "Invalid value" << std::endl;
+        std::cout << "invalid value" << std::endl;
         std::cout << "Monthly payment? ";
         std::cin >> MonthlyPayment;
     }
 
-    std::cout << "Payment: $" << MonthlyPayment << std::endl;
+    std::cout << "payment: $" << MonthlyPayment << std::endl;
 
     double balance = LoanAmount;
     double totalInterest = 0;
