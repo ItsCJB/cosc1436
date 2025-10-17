@@ -41,6 +41,28 @@ void SetTextColor(ForegroundColor color)
     std::cout << "\033[" << (int)color << "m";
 }
 
+
+/// <summary>
+///
+/// </summary>
+bool Confirm (std::string message)
+
+std::cout << message << " (Y / N)? ";
+std::string input;
+std::cin >> input;
+
+while (true)
+{
+    if (_strcmpi(input.c_str(), "Y") == 0)
+        return true;
+   else if (_strcmpi(input.c_str(), "N") == 0)
+        return false;
+   else {
+        DisplayError("You must enter either Y or N");
+
+        std::cin >> input;
+
+
 /// <summary>Displays an error message.</summary>
 /// <param name="message">Message to display.</param>
 void DisplayError(std::string message)
@@ -64,6 +86,32 @@ void DisplayWarning(std::string message)
 /// <remarks>
 /// More details including paragraphs of data if you want.
 /// </remarks>
+
+
+void ReadString(std::string message, bool isRequired)
+{
+
+    std::cout << message;
+
+        std::string input
+        std::getline(std::cin, input);
+
+    
+    while (isRequired && input == "")
+    {
+        DisplayError("Title is required");
+
+        std::getline(std::cin, input);
+    }
+    return input;
+}
+
+
+
+
+
+
+
 void ViewMovie(Movie movie)
 {
     // View movie
@@ -83,22 +131,14 @@ void ViewMovie(Movie movie)
 }
 
 /// <summary>Prompt user and add movie details.</summary>
-void AddMovie()
+Movie AddMovie()
+
 {
-    Movie movie;// = {0};
+    //Movie movie;// = {0};
 
     //Get movie details
-    std::cout << "Enter movie title: ";
-    std::cin.ignore();
-    std::getline(std::cin, movie.title);
-
-    //Title is required
-    while (movie.title == "")
-    {
-        DisplayError("Title is required");
-        std::getline(std::cin, movie.title);
-    }
-
+   movie.title =ReadString("Enter movie title: ",true
+   
     std::cout << "Enter the run length (in minutes): ";
     do
     {
@@ -128,8 +168,7 @@ void AddMovie()
     {
         std::string genre;
 
-        std::cout << "Enter the genre (or blank to continue): ";
-        std::getline(std::cin, genre);
+        std::string genre = ReadString("Enter the genre (or blank to continue): ", false);
         if (genre == "")
             break;
         else if (genre == " ")
@@ -138,6 +177,8 @@ void AddMovie()
         movie.genres = movie.genres + ", " + genre;
     }
 
+    movie.isClassic = Confirm("Is this a classic movie?");
+       
     std::cout << "Is this a classic (Y/N)? ";
     std::string input;
     std::cin >> input;
@@ -158,6 +199,7 @@ void AddMovie()
             std::cin >> input;
         }
     }
+    return movie;
 }
 
 int main()
@@ -182,7 +224,7 @@ int main()
         switch (choice)
         {
             case 'A':
-            case 'a': AddMovie(); break;
+            case 'a': movie = AddMovie(); break;
 
             case 'V':
             case 'v': ViewMovie(movie); break;
