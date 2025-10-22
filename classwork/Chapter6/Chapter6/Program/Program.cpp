@@ -1,11 +1,11 @@
 /*
+/*
  * Chapter 6
  * COSC 1436
  */
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include "Program.h"
 
 //Movie details
 struct Movie
@@ -17,6 +17,9 @@ struct Movie
     bool isClassic;             //Required, false
     std::string genres;         //Optional (comma separated list of genres)
 };
+
+//DO NOT DO THIS!!!
+//int g_thisIsAGlobalVariable = 100;
 
 /// <summary>Defines possible foreground colors.</summary>
 enum class ForegroundColor {
@@ -31,6 +34,10 @@ enum class ForegroundColor {
     BrightCyan = 96
 };
 
+//Function prototypes
+//Forward declarations/referencing
+void DisplayError(std::string);
+
 void ResetTextColor()
 {
     std::cout << "\033[0m";
@@ -41,27 +48,28 @@ void SetTextColor(ForegroundColor color)
     std::cout << "\033[" << (int)color << "m";
 }
 
-
-/// <summary>
-///
-/// </summary>
-bool Confirm (std::string message)
-
-std::cout << message << " (Y / N)? ";
-std::string input;
-std::cin >> input;
-
-while (true)
+/// <summary>Display a confirmation message.</summary>
+/// <param name="message">Message to show.</param>
+/// <returns>Returns true or false depending on whether confirmed or not.</returns>
+bool Confirm(std::string message)
 {
-    if (_strcmpi(input.c_str(), "Y") == 0)
-        return true;
-   else if (_strcmpi(input.c_str(), "N") == 0)
-        return false;
-   else {
-        DisplayError("You must enter either Y or N");
+    std::cout << message << " (Y/N) ";
+    std::string input;
+    std::cin >> input;
 
-        std::cin >> input;
+    while (true)
+    {
+        if (_strcmpi(input.c_str(), "Y") == 0)
+            return true;
+        else if (_strcmpi(input.c_str(), "N") == 0)
+            return false;
+        else {
+            DisplayError("You must enter either Y or N");
 
+            std::cin >> input;
+        }
+    }
+}
 
 /// <summary>Displays an error message.</summary>
 /// <param name="message">Message to display.</param>
@@ -82,36 +90,27 @@ void DisplayWarning(std::string message)
     ResetTextColor();
 }
 
+std::string ReadString(std::string message, bool isRequired)
+{
+    std::cout << message;
+
+    std::string input;
+    std::getline(std::cin, input);
+
+    while (isRequired && input == "")
+    {
+        DisplayError("Value is required");
+
+        std::getline(std::cin, input);
+    }
+
+    return input;
+}
+
 /// <summary>View details of a movie.</summary>
 /// <remarks>
 /// More details including paragraphs of data if you want.
 /// </remarks>
-
-
-void ReadString(std::string message, bool isRequired)
-{
-
-    std::cout << message;
-
-        std::string input
-        std::getline(std::cin, input);
-
-    
-    while (isRequired && input == "")
-    {
-        DisplayError("Title is required");
-
-        std::getline(std::cin, input);
-    }
-    return input;
-}
-
-
-
-
-
-
-
 void ViewMovie(Movie movie)
 {
     // View movie
@@ -132,13 +131,12 @@ void ViewMovie(Movie movie)
 
 /// <summary>Prompt user and add movie details.</summary>
 Movie AddMovie()
-
 {
-    //Movie movie;// = {0};
+    Movie movie;// = {0};
 
     //Get movie details
-   movie.title =ReadString("Enter movie title: ",true
-   
+    movie.title = ReadString("Enter movie title: ", true);
+
     std::cout << "Enter the run length (in minutes): ";
     do
     {
@@ -159,15 +157,11 @@ Movie AddMovie()
         std::cin >> movie.releaseYear;
     }
 
-    std::cout << "Enter the optional description: ";
-    std::cin.ignore();
-    std::getline(std::cin, movie.description);
+    movie.description = ReadString("Enter the optional description: ", false);
 
     // Genres, up to 5
     for (int index = 0; index < 5; ++index)
     {
-        std::string genre;
-
         std::string genre = ReadString("Enter the genre (or blank to continue): ", false);
         if (genre == "")
             break;
@@ -178,28 +172,22 @@ Movie AddMovie()
     }
 
     movie.isClassic = Confirm("Is this a classic movie?");
-       
-    std::cout << "Is this a classic (Y/N)? ";
-    std::string input;
-    std::cin >> input;
 
-    while (true)
-    {
-        if (_strcmpi(input.c_str(), "Y") == 0)
-        {
-            movie.isClassic = true;
-            break;
-        } else if (_strcmpi(input.c_str(), "N") == 0)
-        {
-            movie.isClassic = false;
-            break;
-        } else {
-            DisplayError("You must enter either Y or N");
-
-            std::cin >> input;
-        }
-    }
     return movie;
+}
+
+void DeleteMovie(Movie movie)
+{
+    if (!Confirm("Are you sure you want to delete " + movie.title + "?"))
+        return;
+
+    //TODO: Delete movie
+    DisplayWarning("Not implemented yet");
+}
+
+void EditMovie(Movie movie)
+{
+    DisplayWarning("Not implemented yet");
 }
 
 int main()
@@ -230,10 +218,10 @@ int main()
             case 'v': ViewMovie(movie); break;
 
             case 'D':
-            case 'd': DisplayWarning("Delete not implemented"); break;
+            case 'd': DeleteMovie(movie); break;
 
             case 'E':
-            case 'e': DisplayWarning("Edit not implemented"); break;
+            case 'e': EditMovie(movie); break;
 
             case 'Q':
             case 'q': done = true;
