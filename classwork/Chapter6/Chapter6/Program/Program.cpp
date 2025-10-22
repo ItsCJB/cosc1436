@@ -112,7 +112,13 @@ std::string ReadString(std::string message, bool isRequired)
 /// More details including paragraphs of data if you want.
 /// </remarks>
 void ViewMovie(Movie movie)
+
 {
+    if (movie.title == "")
+    {
+        DisplayWarning("No movies exist")
+            return;
+    }
     // View movie
     //    Title (Year)
     //    Run Length # min
@@ -182,7 +188,8 @@ void DeleteMovie(Movie movie)
         return;
 
     //TODO: Delete movie
-    DisplayWarning("Not implemented yet");
+   // DisplayWarning("Not implemented yet");
+    movie.title = "";
 }
 
 void EditMovie(Movie movie)
@@ -193,6 +200,7 @@ void EditMovie(Movie movie)
 int main()
 {
     //Display main menu
+    Movie movie;
     bool done = false;
     do
     {
@@ -207,7 +215,7 @@ int main()
         char choice;
         std::cin >> choice;
 
-        Movie movie;
+        
 
         switch (choice)
         {
