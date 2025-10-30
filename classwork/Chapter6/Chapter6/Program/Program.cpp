@@ -1,5 +1,4 @@
 /*
-/*
  * Chapter 6
  * COSC 1436
  */
@@ -90,6 +89,25 @@ void DisplayWarning(std::string message)
     ResetTextColor();
 }
 
+int ReadInt(int minimumValue, int maximumValue)
+{
+    do
+    {
+        int value;
+        std::cin >> value;
+
+        if (value >= minimumValue && value <= maximumValue)
+            return value;
+
+        DisplayError("Value is outside range");
+    } while (true);
+}
+
+int ReadInt(int minimumValue)
+{
+    return ReadInt(minimumValue, INT_MAX);
+}
+
 std::string ReadString(std::string message, bool isRequired)
 {
     std::cout << message;
@@ -112,13 +130,13 @@ std::string ReadString(std::string message, bool isRequired)
 /// More details including paragraphs of data if you want.
 /// </remarks>
 void ViewMovie(Movie movie)
-
 {
     if (movie.title == "")
     {
-        DisplayWarning("No movies exist")
-            return;
+        DisplayWarning("No movies exist");
+        return;
     }
+
     // View movie
     //    Title (Year)
     //    Run Length # min
@@ -144,24 +162,11 @@ Movie AddMovie()
     movie.title = ReadString("Enter movie title: ", true);
 
     std::cout << "Enter the run length (in minutes): ";
-    do
-    {
-        std::cin >> movie.runLength;
-
-        //Error
-        if (movie.runLength < 0)
-            DisplayError("Run length must be at least 0");
-
-    } while (movie.runLength < 0);
+    movie.runLength = ReadInt(0);
 
     std::cout << "Enter the release year (1900-2100): ";
     std::cin >> movie.releaseYear;
-    while (movie.releaseYear < 1900 || movie.releaseYear > 2100)
-    {
-        DisplayError("Release year must be between 1900 and 2100");
-
-        std::cin >> movie.releaseYear;
-    }
+    movie.releaseYear = ReadInt(1900, 2100);
 
     movie.description = ReadString("Enter the optional description: ", false);
 
@@ -182,25 +187,75 @@ Movie AddMovie()
     return movie;
 }
 
-void DeleteMovie(Movie movie)
+void DeleteMovie(Movie& movie)
 {
     if (!Confirm("Are you sure you want to delete " + movie.title + "?"))
         return;
 
     //TODO: Delete movie
-   // DisplayWarning("Not implemented yet");
+    //DisplayWarning("Not implemented yet");
     movie.title = "";
 }
 
-void EditMovie(Movie movie)
+void EditMovie(Movie& movie)
 {
     DisplayWarning("Not implemented yet");
 }
 
+//Test function overloading 
+void Display (int value)
+{
+    std::cout << "int" << std::endl;
+}
+
+void Display(double value)
+{
+    std::cout << "double" << std::endl;
+}
+void Display(float vaule)
+{
+    std::cout << "float" << std::endl;
+}
+void Display(int value1, double value2)
+{
+    std::cout << "int, double" << std::endl;
+}
+void Display(short value,float)
+{
+    std::cout << "short, float" << std::endl;
+}
+void Display(int, short)
+{
+    std::cout << "int, short" << std::endl;
+}
+void Display(short, int)
+{
+    std::cout << "short, int" << std::endl;
+}
+
+void TestFunctionOverloading()
+{
+    Display(10);
+    Display(4.56);
+    Display((short)34);
+    Display(10, 4.56F);
+
+    long lvalue = 10000L;
+    Display(lvalue, 4.56);
+
+    //Display("Hello", 4.56);
+    //Display(10, "Hello")
+    Display('c', 4.56F);
+    Display((short)5, (short)10);
+}
+
 int main()
 {
-    //Display main menu
+    const int MaximumMovies = 100;
     Movie movie;
+    Movie movies[MaximumMovies];
+}
+    //Display main menu
     bool done = false;
     do
     {
@@ -214,8 +269,6 @@ int main()
 
         char choice;
         std::cin >> choice;
-
-        
 
         switch (choice)
         {
