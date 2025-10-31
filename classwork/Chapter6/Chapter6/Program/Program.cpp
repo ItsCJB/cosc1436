@@ -202,8 +202,8 @@ void EditMovie(Movie& movie)
     DisplayWarning("Not implemented yet");
 }
 
-//Test function overloading 
-void Display (int value)
+//Test function overloading
+void Display(int value)
 {
     std::cout << "int" << std::endl;
 }
@@ -212,49 +212,112 @@ void Display(double value)
 {
     std::cout << "double" << std::endl;
 }
-void Display(float vaule)
+
+void Display(float value)
 {
     std::cout << "float" << std::endl;
 }
-void Display(int value1, double value2)
+
+void Display(short value1, double value2)
 {
     std::cout << "int, double" << std::endl;
 }
-void Display(short value,float)
+
+void Display(short value, float)
 {
     std::cout << "short, float" << std::endl;
 }
+
 void Display(int, short)
 {
     std::cout << "int, short" << std::endl;
 }
+
 void Display(short, int)
 {
-    std::cout << "short, int" << std::endl;
+    std::cout << "int, short" << std::endl;
 }
 
-void TestFunctionOverloading()
+//void TestFunctionOverloading()
+//{ 
+//    Display(10);   //Display(int)
+//    Display(4.56); // Display(double)
+//    Display((short)34);  // Display(int) -> shortest type coercion
+//    Display(10, 4.56F);  // Display(int, double)
+//
+//    long lValue = 10000L;
+//    Display(lValue, 4.56);
+//
+//    //Display("Hello", 4.56); //Compiler error, no matches
+//    //Display(10, "Hello");   //Compiler error, no matches
+//
+//    Display('c', 4.56F);   // short, float
+//    Display((short)5, (short)10);
+//}
+
+int Factorial(int value)
 {
-    Display(10);
-    Display(4.56);
-    Display((short)34);
-    Display(10, 4.56F);
+    if (value <= 1)
+        return 1;
 
-    long lvalue = 10000L;
-    Display(lvalue, 4.56);
+    return value * Factorial(value - 1);
+}
 
-    //Display("Hello", 4.56);
-    //Display(10, "Hello")
-    Display('c', 4.56F);
-    Display((short)5, (short)10);
+void ArrayDemo()
+{
+    const int MaxNumbers = 100;
+
+    //Init array using { 0 }
+    int numbers[MaxNumbers] = {0};
+    //int numbers[100];
+
+    //# of days in each month
+    //int daysInMonth[12] = { 0 };
+    //Approach 1 - correct but not readable
+    /*daysInMonth[0] = daysInMonth[2] = daysInMonth[4] = daysInMonth[6] = daysInMonth[7]
+                   = daysInMonth[9] = daysInMonth[11] = 31;
+    daysInMonth[1] = 28;
+    daysInMonth[3] = daysInMonth[5] = daysInMonth[8] = daysInMonth[10] = 30;*/
+
+    //Approach 2 - init expression
+    // Zero init - each element is set to 0// { 0 }
+    // Full init - each element is assigned a value
+    // Partial init - each element is assigned a value and remaining elements are 0 initialized    
+    int daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    // Implicit array sizing
+    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    //Set each element to its element number (element 1 = 1, element 2 = 2, etc)
+    //Approach 1 for small arrays only
+    numbers[0] = 1;
+    numbers[1] = 2;
+    numbers[2] = 3;
+
+    //Approach 2 for any array
+    for (int index = 0; index < MaxNumbers; ++index)
+        numbers[index] = index + 1;
+
+    for (int index = 0; index < MaxNumbers; ++index)
+        std::cout << numbers[index] << std::endl;
 }
 
 int main()
 {
+    ArrayDemo();
+    //std::cout << Factorial(5) << std::endl;
+
+    //Cannot calculate the size of an array at runtime so use a const int variable
     const int MaximumMovies = 100;
+
+    //TODO: Leaving this for now to avoid breaking code
     Movie movie;
     Movie movies[MaximumMovies];
-}
+
+    // Array operator []
+    //    A[index] = behaves like a variable
+    Movie firstElement = movies[0];
+
     //Display main menu
     bool done = false;
     do
@@ -293,5 +356,5 @@ int main()
 
     //std::cin.ignore();
     // Function call ::= func () 
-    //ViewMovie();
+    //ViewMovie();    
 }
