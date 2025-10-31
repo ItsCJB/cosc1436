@@ -153,7 +153,18 @@ void ViewMovie(Movie movie)
     std::cout << std::endl;
 }
 
-/// <summary>Prompt user and add movie details.</summary>
+void ViewMovies(Movie movies[] int size)
+{
+    for (int index = 0; index < size; ++index)
+    {
+        if (movies[index].title == "")
+            return;
+
+        ViewMovie(movies[index]);
+
+
+    }
+}
 Movie AddMovie()
 {
     Movie movie;// = {0};
@@ -286,7 +297,7 @@ void ArrayDemo()
     int daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     // Implicit array sizing
-    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+   // int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     //Set each element to its element number (element 1 = 1, element 2 = 2, etc)
     //Approach 1 for small arrays only
@@ -295,11 +306,22 @@ void ArrayDemo()
     numbers[2] = 3;
 
     //Approach 2 for any array
-    for (int index = 0; index < MaxNumbers; ++index)
-        numbers[index] = index + 1;
+    //for (int index = 0; index < MaxNumbers; ++index)
+       //numbers[index] = index + 1;
+    int rangeIndex = 0;
+    for(int number: numbers)
+        number = ++rangeIndex;
+   
+    for (int number: numbers)
+        std::cout << number << std::endl;
+    
+    int outIndex = 0;
+    std::cout << ++numbers [outIndex] << std::endl;
+    std::cout << numbers[++outIndex] << std::endl;
+    std::cout << numbers[outIndex++] << std::endl;
+    std::cout << numbers[outIndex]++ << std::endl;
 
-    for (int index = 0; index < MaxNumbers; ++index)
-        std::cout << numbers[index] << std::endl;
+    
 }
 
 int main()
@@ -339,7 +361,7 @@ int main()
             case 'a': movie = AddMovie(); break;
 
             case 'V':
-            case 'v': ViewMovie(movie); break;
+            case 'v': ViewMovies(movies , MaximumMovies); break;
 
             case 'D':
             case 'd': DeleteMovie(movie); break;
