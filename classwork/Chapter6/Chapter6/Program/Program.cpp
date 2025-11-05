@@ -371,10 +371,12 @@ void ArrayDemo()
                                                // Have to use a for loop to compare elements
     std::cout << numbers;     //Output doesn't work, have to use a for loop
     //std::cin >> numbers;      //Input will not compile
-}
-#pragma endregion
 
+#pragma endregion
+    void MultidimensionalArrayDemo()
+        
 int main()
+MultidimensionalArrayDemo()
 {
     //ArrayDemo();
     //std::cout << Factorial(5) << std::endl;
