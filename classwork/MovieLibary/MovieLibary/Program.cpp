@@ -199,6 +199,7 @@ void PointerDemo()
 {
     int localInt = 1234;
     //Pointer to an int,
+    //pointer value is a memory address(8 bytes on 64-bit systems)
     int* pInt;
     pInt = &localInt;
 
@@ -206,7 +207,21 @@ void PointerDemo()
 
     // Dereferencing a pointer returns the original T value 
     *pInt = 5678;
-      
+
+ //An uninitialized pointer contains a garbage memory address
+    //Initialize pointer to memory 0 which is valid
+        // NULL - C vrsion, not preferred as it is still an int 
+    //float* pFloat = NULL;
+    // // nullptr - preferred in c++
+    float* pFloat = nullptr;
+    //pFloat = 0;
+    //pFloat = 1234;
+    //Always ensure pointer is valid ( not nullptr) before dereferencing
+    //if (pFloat != nullptr) {
+    if (pFloat) {
+        *pFloat = 123.45;
+       //crash - access violation
+    ]
 }
 
 
